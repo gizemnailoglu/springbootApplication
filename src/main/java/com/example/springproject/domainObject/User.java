@@ -1,13 +1,13 @@
 package com.example.springproject.domainObject;
 
-
 import lombok.Data;
 
 import javax.persistence.*;
 
+
 @Data
 @Entity
-@Table(name ="userinfo")
+@Table(name = "users")
 
 public class User {
     @Id
@@ -18,13 +18,21 @@ public class User {
     @Column(nullable = false , unique = true)
     private  String username;
     private String name ;
+    private  String email;
     private String password;
     private  String surname ;
+    private String rol;
 
 
-//    @OneToOne(cascade = CascadeType.ALL) // etkileşimli olsun istediğimiz için ekledik.
-//    @JoinColumn(name = "address_id")
-//    private Address address;
 
+
+
+
+
+
+
+
+//
+//
 
 }

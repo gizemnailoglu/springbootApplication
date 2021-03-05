@@ -1,5 +1,10 @@
 package com.example.springproject.dto;
 
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+//import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.example.springproject.domainObject.Role;
+import com.example.springproject.domainObject.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -7,8 +12,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class UserDTO implements Serializable {
-
+public class UserDTO extends User implements Serializable {
 
     /**
      *
@@ -20,7 +24,10 @@ public class UserDTO implements Serializable {
     private String username;
     private String name;
     private String surname;
-//    @JsonProperty("address")
-//    private AddressDTO addressDTO;
+    private String email;
+    @JsonProperty("role")
+    private Role roleDTO;
 
+    public void setRoleDTO(UserDTO userDTO) {
+    }
 }
