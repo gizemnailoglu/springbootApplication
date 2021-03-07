@@ -3,10 +3,8 @@ package com.example.springproject.dto;
 //import com.fasterxml.jackson.annotation.JsonIgnore;
 //import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.example.springproject.domainObject.Role;
 import com.example.springproject.domainObject.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -25,9 +23,9 @@ public class UserDTO extends User implements Serializable {
     private String name;
     private String surname;
     private String email;
-    @JsonProperty("role")
-    private Role roleDTO;
-
-    public void setRoleDTO(UserDTO userDTO) {
-    }
+//    @JsonProperty("role")
+//    private Role roleDTO;
+//
+//    public void setRoleDTO(UserDTO userDTO) {
+//    }
 }

@@ -1,5 +1,6 @@
 package com.example.springproject;
 
+import com.example.springproject.domainObject.Food;
 import com.example.springproject.domainObject.User;
 import com.example.springproject.domainObject.rule;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,8 +16,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -102,6 +102,108 @@ public void testUpdateUser() throws Exception {
 		String userId = "1";
 
 		mockMvc.perform(delete("/api/v1/users/{userId}", userId)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk());
+	}
+
+
+
+	@Test
+	public void GetAllFoods() throws Exception{
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/foods")
+				.accept(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$[*].header").exists())
+				.andExpect(jsonPath("$[*].description").exists())
+				.andExpect(jsonPath("$[*].username").exists())
+				.andExpect(jsonPath("$[*].userId").exists())
+				.andExpect(jsonPath("$[*].createdDate").exists());
+	}
+
+	@Test
+	public void testGetFoodById() throws Exception {
+		String foodId = "7";
+
+		mockMvc.perform(get("/api/v1/foodsByID/{foodId}", foodId)
+				.accept(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.id").exists())
+				.andExpect(jsonPath("$.header").exists())
+				.andExpect(jsonPath("$.description").exists());
+
+
+	}
+
+	@Test
+	public void testGetFoodByHeader() throws Exception {
+		String Header = "ispanak";
+
+		mockMvc.perform(get("/api/v1/foodsByHeader/{header}", Header)
+				.accept(MediaType.APPLICATION_JSON))
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$.id").exists())
+				.andExpect(jsonPath("$.header").exists())
+				.andExpect(jsonPath("$.description").exists());
+
+
+	}
+
+	@Test
+	public void testCreateFood() throws Exception {
+		Food newFood = new Food();
+		newFood.setHeader("mercimek yemegi");
+		newFood.setDescription("yesil mercimek yemegi tarifi");
+
+		User newUser = new User();
+		newUser.setUsername("morgokyuzu");
+		newUser.setId(7);
+
+
+		mockMvc.perform(post("/api/v1/food")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(asJsonString(newFood)))
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.id").exists())
+				.andExpect(jsonPath("$.header").exists())
+				.andExpect(jsonPath("$.description").exists());
+//				.andExpect(jsonPath("$.user.username").exists())
+//				.andExpect(jsonPath("$.user.userId").exists());
+	}
+
+
+	@Test
+	public void testUpdateFood() throws Exception {
+		Food newFood = new Food();
+		newFood.setId(7L);
+		newFood.setHeader("bulgur pilavi");
+		newFood.setDescription("mercimekli bulgur pilavi tarifi");
+
+
+		mockMvc.perform(put("/api/v1/food")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(asJsonString(newFood)))
+				.andExpect(status().isCreated())
+				.andExpect(jsonPath("$.id").exists())
+//			.andExpect(jsonPath("$.username").exists())
+				.andExpect(jsonPath("$.header").exists())
+				.andExpect(jsonPath("$.description").exists());
+
+
+
+
+	}
+
+
+
+
+	@Test
+	public void testDeleteFood() throws Exception {
+		String foodId = "5";
+
+		mockMvc.perform(delete("/api/v1/foods/{foodId}", foodId)
 				.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}

@@ -46,7 +46,7 @@ public class FoodServiceImpl implements  FoodService {
 
             foodRepository.save(currentFood.get());
 
-//            UserDTO userDTO = new ModelMapper().map(currentFood.get() ,UserDTO.class);
+
 
             return  currentFood.get();
         }
@@ -71,6 +71,23 @@ public class FoodServiceImpl implements  FoodService {
     }
 
 
+//    //id'ye göre yemekleri getirmiyor.
+//    @Override
+//    public Food getFood(Long foodId) {
+//        Optional<Food> currentFood = foodRepository.findById(foodId);
+//        if (currentFood.isPresent()) {
+//
+//            Long userId = currentFood.get().getUserId();
+//            String username =currentFood.get().getUsername();
+//
+//            User user = userRepoSitory.findById(userId).get();
+//            user = userRepoSitory.findByUsername(username).get();
+//            String user_name = user.getUsername();
+//          currentFood.get();
+//        }
+//     return null;
+//    }
+
     //id'ye göre yemekleri getirmiyor.
     @Override
     public Food getFood(Long foodId) {
@@ -78,24 +95,11 @@ public class FoodServiceImpl implements  FoodService {
         if (currentFood.isPresent()) {
 
             Long userId = currentFood.get().getUserId();
+             User user = userRepoSitory.findById(userId).get();
+//            String user_name = user.getName();
 
-            User user = userRepoSitory.findById(userId).get();
-            String user_name = user.getName();
-            currentFood.get();
-        }
-     return null;
-    }
-
-
-    @Override
-    public Food getFood(String Header) {
-        Optional<Food> currentFood = foodRepository.findByHeader(Header);
-        if (currentFood.isPresent()) {
-
-            Long userId = currentFood.get().getUserId();
-           User user = userRepoSitory.findById(userId).get();
-            String user_name = user.getName();
-            currentFood.get();
+            currentFood.get().setUsername(user.getUsername());
+            return currentFood.get();
         }
         return null;
     }
@@ -103,6 +107,23 @@ public class FoodServiceImpl implements  FoodService {
 
 
 
+    @Override
+    public Food getFoodByHeader(String Header) {
+        Optional<Food> currentFood = foodRepository.findByHeader(Header);
+        if (currentFood.isPresent()) {
+
+            Long userId = currentFood.get().getUserId();
+           User user = userRepoSitory.findById(userId).get();
+           String user_name = user.getName();
+           currentFood.get().setUsername(user.getUsername());
+           return  currentFood.get();
+        }
+        else
+        {
+           return new Food();
+        }
+
+    }
 
 
 }

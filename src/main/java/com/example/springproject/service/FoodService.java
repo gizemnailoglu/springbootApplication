@@ -15,6 +15,6 @@ public interface FoodService {
     Food getFood(Long foodId);
   Food createFood(Food food);
   Food updateFood(Food food);
+  Food getFoodByHeader(String Header);
 
-    Food getFood(String header);
 }

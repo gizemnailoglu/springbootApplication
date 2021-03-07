@@ -25,4 +25,6 @@ public interface UserService {
     List<User> getAllUsers();
     void saveUser(User user);
 
+    Boolean Login(String username, String pass);
+
 }

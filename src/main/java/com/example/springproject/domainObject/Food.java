@@ -1,11 +1,9 @@
 package com.example.springproject.domainObject;
 
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @Entity
@@ -17,15 +15,19 @@ public class Food {
     private  long id;
 
     @Column(nullable = false , unique = true)
+
     private String header ;
     private String description;
+
+
+    private String username;
     private Long userId ;
 
-    @CreatedDate
-    private LocalDateTime createdDate ;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate= new Date(System.currentTimeMillis());
 
-    @LastModifiedDate
-    private  LocalDateTime modifiedDate ;
+
+
 
 
 
